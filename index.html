@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>可以 Pick — 靈感知識庫</title>
+<meta name="description" content="收藏靈感、概念、案例、語錄與視覺參考的個人知識庫">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📌</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="nav-toggle" id="navToggle" aria-label="開關導覽選單">☰</button>
+    <div class="brand">📌 可以 Pick</div>
+    <div class="search-wrap">
+      <input type="search" id="searchInput" placeholder="搜尋標題、摘要、標籤…" autocomplete="off">
+    </div>
+  </header>
+
+  <div class="body">
+    <nav class="sidebar" id="sidebar">
+      <div class="axis-switch">
+        <button class="axis-btn active" data-axis="category">依主題</button>
+        <button class="axis-btn" data-axis="type">依類型</button>
+      </div>
+      <div class="nav-list" id="navList"></div>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </nav>
+
+    <main class="reader" id="reader">
+      <div class="empty-state" id="emptyState">
+        <p>從左側選一則內容，或用上方搜尋找找看。</p>
+      </div>
+      <article class="item-view" id="itemView" hidden>
+        <div class="item-meta">
+          <span class="pill pill-type" id="itemType"></span>
+          <span class="pill pill-category" id="itemCategory"></span>
+        </div>
+        <h1 id="itemTitle"></h1>
+        <div class="item-sub">
+          <span id="itemSource"></span>
+        </div>
+        <div class="item-tags" id="itemTags"></div>
+        <div class="item-image-wrap" id="itemImageWrap">
+          <img id="itemImage" alt="">
+        </div>
+        <div class="item-body markdown-body" id="itemBody"></div>
+      </article>
+    </main>
+  </div>
+</div>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

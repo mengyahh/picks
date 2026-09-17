@@ -1,0 +1,19 @@
+# raw personal source files kept locally, not part of the published site
+/*.JPG
+/*.jpg
+/*.PNG
+/*.png
+/*.pdf
+/建築/
+/遊具參考/
+/inbox/*
+!/inbox/.gitkeep
+!/inbox/processed/.gitkeep
+
+# python cache
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
