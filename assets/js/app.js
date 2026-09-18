@@ -26,7 +26,6 @@
     itemSource: document.getElementById("itemSource"),
     itemTags: document.getElementById("itemTags"),
     itemImageWrap: document.getElementById("itemImageWrap"),
-    itemImage: document.getElementById("itemImage"),
     itemBody: document.getElementById("itemBody"),
     sidebar: document.getElementById("sidebar"),
     navToggle: document.getElementById("navToggle"),
@@ -38,13 +37,14 @@
     quote: "語錄",
     visual: "視覺參考",
     note: "摘錄筆記",
+    wishlist: "願望清單",
   };
 
   function typeLabel(t) {
     return TYPE_LABELS[t] || t;
   }
 
-  fetch("data/index.json")
+  fetch("data/index.json", { cache: "no-store" })
     .then(function (r) { return r.json(); })
     .then(function (data) {
       state.items = data.items || [];
@@ -216,16 +216,10 @@
       .map(function (t) { return '<span class="tag-chip">' + escapeHtml(t) + "</span>"; })
       .join("");
 
-    if (item.image) {
-      el.itemImageWrap.hidden = false;
-      el.itemImage.src = "assets/" + item.image;
-      el.itemImage.alt = item.title;
-    } else {
-      el.itemImageWrap.hidden = true;
-    }
+    renderImages(item);
 
     el.itemBody.innerHTML = '<p style="color:var(--text-muted)">載入內容中…</p>';
-    fetch(item.file)
+    fetch(item.file, { cache: "no-store" })
       .then(function (r) { return r.text(); })
       .then(function (text) {
         var body = text.replace(/^---[\s\S]*?---\s*/, "").trim();
@@ -236,6 +230,24 @@
       });
 
     el.reader.scrollTop = 0;
+  }
+
+  function renderImages(item) {
+    el.itemImageWrap.innerHTML = "";
+    var images = (item.images && item.images.length) ? item.images : (item.image ? [item.image] : []);
+    if (!images.length) {
+      el.itemImageWrap.hidden = true;
+      return;
+    }
+    el.itemImageWrap.hidden = false;
+    el.itemImageWrap.classList.toggle("gallery", images.length > 1);
+    images.forEach(function (src) {
+      var img = document.createElement("img");
+      img.src = "assets/" + src;
+      img.alt = item.title;
+      img.loading = "lazy";
+      el.itemImageWrap.appendChild(img);
+    });
   }
 
   function escapeHtml(s) {
