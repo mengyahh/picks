@@ -13,8 +13,11 @@ content/items/*.md      每則內容一個檔案（frontmatter + 內文）
 data/index.json         由 content/items/*.md 自動彙整產生，網站實際讀取的資料
 scripts/build_index.py  重新產生 data/index.json 的腳本
 scripts/analyze_inbox.py（選用）呼叫 Claude API 自動分析 /inbox 圖片產生草稿
-inbox/                  待整理的新截圖丟這裡
+inbox/                  待整理的新截圖丟這裡（處理完會移走）
+原始照片/               所有原始照片/截圖的存放處（只留在本機，不會推上 GitHub）
 ```
+
+`assets/images/` 是網站實際使用、已縮圖的版本；`原始照片/` 是原檔備份，兩者用途不同。
 
 分類架構（type × category 雙軸）與 frontmatter 欄位定義請見規劃文件，這裡不重複。
 
@@ -34,7 +37,7 @@ python -m http.server 8420
 
 1. 把截圖/照片丟進 `/inbox` 資料夾
 2. 開一個 Claude Code 對話，跟它說「請幫我處理 /inbox 裡的新截圖，依照這個專案的分類架構建立草稿」
-3. Claude Code 會讀圖（有文字的話逐字轉錄，沒文字的話寫描述），建議 type/category/tags，在 `content/items/` 建立草稿 `.md`，複製圖片到 `assets/images/`，並重新執行 `python scripts/build_index.py` 更新 `data/index.json`
+3. Claude Code 會讀圖（有文字的話逐字轉錄，沒文字的話寫描述），建議 type/category/tags，在 `content/items/` 建立草稿 `.md`，複製圖片到 `assets/images/`，把原檔移到 `原始照片/`，並重新執行 `python scripts/build_index.py` 更新 `data/index.json`
 4. 你檢查草稿內容（尤其是分類是否貼切、`source` 是否需要補上），滿意後 commit + push
 
 ### 方式二：自己手動寫
@@ -53,7 +56,7 @@ python scripts/analyze_inbox.py
 python scripts/build_index.py
 ```
 
-腳本會呼叫 Claude API 分析 `/inbox` 裡每張圖，產生草稿並把來源圖片搬到 `inbox/processed/`。這是選用工具，平常用方式一（直接請 Claude Code 處理）就夠了。
+腳本會呼叫 Claude API 分析 `/inbox` 裡每張圖，產生草稿並把來源圖片搬到 `原始照片/`。這是選用工具，平常用方式一（直接請 Claude Code 處理）就夠了。
 
 ## 部署到 GitHub Pages
 

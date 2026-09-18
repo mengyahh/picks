@@ -23,6 +23,8 @@ def optimize(path):
     print(f"{os.path.basename(path)}: {w}x{h} -> {im.size[0]}x{im.size[1]}, {os.path.getsize(path)//1024}KB")
 
 if __name__ == "__main__":
-    for name in sorted(os.listdir(IMG_DIR)):
+    import sys
+    names = sys.argv[1:] or sorted(os.listdir(IMG_DIR))
+    for name in names:
         if name.lower().endswith((".jpg", ".jpeg", ".png")):
             optimize(os.path.join(IMG_DIR, name))

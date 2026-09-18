@@ -16,7 +16,7 @@ Usage:
 
 For every image in /inbox, this writes a draft content/items/<id>.md,
 copies the image into assets/images/, and moves the source image into
-/inbox/processed/. Review every draft before committing — check the
+/原始照片/. Review every draft before committing — check the
 suggested type/category/tags and fill in `source` if you know it.
 """
 import base64
@@ -31,7 +31,7 @@ import urllib.request
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 INBOX_DIR = os.path.join(ROOT, "inbox")
-PROCESSED_DIR = os.path.join(INBOX_DIR, "processed")
+PROCESSED_DIR = os.path.join(ROOT, "原始照片")
 ITEMS_DIR = os.path.join(ROOT, "content", "items")
 IMAGES_DIR = os.path.join(ROOT, "assets", "images")
 
