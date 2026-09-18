@@ -26,6 +26,8 @@
     itemSource: document.getElementById("itemSource"),
     itemTags: document.getElementById("itemTags"),
     itemImageWrap: document.getElementById("itemImageWrap"),
+    lightbox: document.getElementById("lightbox"),
+    lightboxImg: document.getElementById("lightboxImg"),
     itemBody: document.getElementById("itemBody"),
     sidebar: document.getElementById("sidebar"),
     navToggle: document.getElementById("navToggle"),
@@ -246,9 +248,24 @@
       img.src = "assets/" + src;
       img.alt = item.title;
       img.loading = "lazy";
+      img.addEventListener("click", function () { openLightbox(img.src, item.title); });
       el.itemImageWrap.appendChild(img);
     });
   }
+
+  function openLightbox(src, alt) {
+    el.lightboxImg.src = src;
+    el.lightboxImg.alt = alt || "";
+    el.lightbox.classList.add("open");
+  }
+  function closeLightbox() {
+    el.lightbox.classList.remove("open");
+    el.lightboxImg.src = "";
+  }
+  el.lightbox.addEventListener("click", closeLightbox);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeLightbox();
+  });
 
   function escapeHtml(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
